@@ -1,0 +1,110 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.user-signup-page {
+  .user-signup-page-container {
+    width: $laptop;
+    margin: 2rem auto;
+    @include shadow1;
+
+    .user-signup-page-title {
+      @include title;
+    }
+
+    .user-signup-fieldset {
+      @include fieldset;
+
+      .user-signup-legend {
+        @include legend;
+      }
+
+      .user-signup-form {
+        @include twoGridTemplateEqualColumns;
+
+        // sign up form input fields
+        .user-signup-inputs-wrapper {
+          @include shadow2;
+          // Input container
+          .input-container {
+            @include inputContainer;
+            margin-bottom: 1rem;
+
+            .input-icon {
+              @include inputIcon;
+            }
+
+            .input-field {
+              @include inputField;
+            }
+
+            .input-label {
+              @include inputLabel;
+            }
+
+            .input-highlight {
+              @include inputHighlight;
+            }
+
+            .input-field:focus + .input-label {
+              @include focusInputFieldAndInputLabel;
+            }
+
+            .input-field:focus + .input-label + .input-highlight {
+              width: 100%;
+            }
+
+            .icon {
+              @include passwordDisplay;
+            }
+          }
+
+          // input consent
+          .consent-container {
+            @include flexRow;
+            .user-signup-consent-input {
+              @include checkbox;
+            }
+
+            .user-signup-accept {
+              font-size: $afs;
+            }
+
+            .terms-of-use {
+              @include termOfUse;
+            }
+          }
+
+          // Button
+          .user-signup-btn {
+            @include button1;
+          }
+
+          // Have an account
+          .have-account {
+            @include haveAccount;
+
+            .link-to-login {
+              @include linkTo;
+            }
+          }
+        }
+
+        // Password checkup box
+        .password-checkbox {
+          @include shadow2;
+          background-color: $box-bg;
+          @include flexColumn;
+
+          .check-password-title {
+            @include subTitle;
+            font-size: $aafs;
+          }
+
+          .check {
+            @include paragraph;
+          }
+        }
+      }
+    }
+  }
+}

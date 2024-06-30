@@ -1,0 +1,36 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.departments-wrapper {
+  width: 100%;
+  .departments-title {
+    @include subTitle;
+  }
+
+  .add-department-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-title {
+      @include subTitle;
+    }
+
+    .add-department-btn {
+      @include button2;
+    }
+  }
+
+  .department-wrapper {
+    .department-title {
+      @include subTitle;
+    }
+
+    .department-description {
+      @include paragraph;
+    }
+
+    .department-keywords {
+      @include paragraph;
+    }
+  }
+}

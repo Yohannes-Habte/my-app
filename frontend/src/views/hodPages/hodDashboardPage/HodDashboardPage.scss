@@ -1,0 +1,17 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-profile-page {
+  .department-profile-page-container {
+    .department-profile-page-title {
+      @include title;
+      @include shadow1;
+      background-color: $userSidebar-bg;
+      z-index: 999;
+    }
+
+    .department-profile-wrapper {
+      @include flexRow;
+    }
+  }
+}

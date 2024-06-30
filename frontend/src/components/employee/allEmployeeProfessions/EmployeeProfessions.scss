@@ -1,0 +1,59 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.employee-professions-wrapper {
+  width: $laptop;
+  margin: 1rem auto;
+
+  .employee-professions-title {
+    @include title;
+  }
+
+  .add-employee-profession {
+    @include flexSpaceBetween;
+
+    .add-profession-title {
+      @include subTitle;
+    }
+
+    .add-profession-btn {
+      @include button2;
+    }
+  }
+
+  .profession-list-container {
+   
+
+    .table-professions {
+      width: 100%;
+      margin-top: 1rem;
+
+      .table-head {
+        background-color: $modal-bg;
+        .head-row {
+          .head-cell {
+            text-align: start;
+            font-size: $afs;
+            padding: 1rem;
+            border-bottom: 1px solid $blue;
+          }
+        }
+      }
+
+      .table-body {
+        .body-row {
+          .body-cell {
+            text-align: start;
+            font-size: $afs;
+            padding: 1rem;
+            border-bottom: 1px solid $gray;
+
+            .delete-icon {
+              @include deleteIcon;
+            }
+          }
+        }
+      }
+    }
+  }
+}

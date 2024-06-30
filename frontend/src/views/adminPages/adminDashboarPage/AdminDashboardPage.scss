@@ -1,0 +1,17 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.admin-profile-page {
+  .admin-profile-page-container {
+    .admin-profile-page-title {
+      @include title;
+      @include shadow1;
+      background-color: $userSidebar-bg;
+      z-index: 999;
+    }
+
+    .admin-profile-wrapper {
+      @include flexRow;
+    }
+  }
+}

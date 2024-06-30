@@ -1,0 +1,24 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-jobs-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-jobs-title {
+    @include subTitle;
+  }
+
+  .add-department-job-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-job-title {
+      @include subTitle;
+    }
+
+    .add-department-job-btn {
+      @include button2;
+    }
+  }
+}

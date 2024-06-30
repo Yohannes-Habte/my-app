@@ -1,0 +1,164 @@
+@import '../../styles/Variables.scss';
+@import '../../styles/Mixins.scss';
+
+.procedures-of-getting-services {
+  width: $tablet;
+  margin: 1rem auto;
+
+  .specific-service-procedure {
+    @include shadow;
+
+    .sub-title {
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 1rem 0.5rem;
+      background-color: #8ba5f2;
+      border-radius: 0.3rem 0.3rem 0 0;
+    }
+
+    .step {
+      position: relative;
+      @include shadow2;
+      margin-top: 1rem;
+      cursor: pointer;
+
+      .down-arrow {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.3rem;
+        color: $title;
+        font-size: $afs;
+      }
+
+      .up-arrow {
+        position: absolute;
+        right: 1.5rem;
+        top: 2rem;
+        color: $color;
+        font-size: $afs;
+      }
+
+      .step-title {
+        @include shadow2;
+        background-color: $sideNavbar-bg;
+        color: #000000;
+      }
+
+      .paragraph {
+        background-color: none;
+        margin-top: 0.3rem;
+      }
+    }
+  }
+}
+
+/* Tablet screen size */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .procedures-of-getting-services {
+    width: 100%;
+    margin: 1rem auto;
+    line-height: 2rem;
+
+    .specific-service-procedure {
+      @include shadow;
+
+      .sub-title {
+        font-size: 1.8rem;
+        padding: 1rem 0.5rem;
+        background-color: #8ba5f2;
+        border-radius: 0.3rem 0.3rem 0 0;
+      }
+
+      .step {
+        position: relative;
+        @include shadow2;
+        margin-top: 1rem;
+        cursor: pointer;
+
+        .down-arrow {
+          position: absolute;
+          right: 1.5rem;
+          top: 1.3rem;
+          color: $title;
+          font-size: $afs;
+        }
+
+        .up-arrow {
+          position: absolute;
+          right: 1.5rem;
+          top: 2rem;
+          color: $color;
+          font-size: $afs;
+        }
+
+        .step-title {
+          @include shadow2;
+          background-color: $sideNavbar-bg;
+          color: #000000;
+        }
+
+        .paragraph {
+          background-color: none;
+          @include shadow2;
+          margin-top: 0.3rem;
+        }
+      }
+    }
+  }
+}
+
+/* Labtop screen size */
+@media screen and (min-width: 1024px) {
+  .procedures-of-getting-services {
+    width: 100%;
+    margin: 1rem auto;
+
+    .specific-service-procedure {
+      @include shadow;
+
+  .steps-title {
+          @include shadow2;
+          background-color: $sideNavbar-bg;
+          color: #000000;
+        }
+
+        .step {
+          position: relative;
+          @include shadow2;
+          margin-top: 1rem;
+          cursor: pointer;
+
+          .down-arrow {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            color: $title;
+            font-size: $afs;
+          }
+
+          .up-arrow {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            color: $color;
+            font-size: $afs;
+          }
+
+          .step-title {
+            background-color: $element;
+            padding: 0.5rem;
+          }
+
+          .default {
+            background-color: $main;
+          }
+
+          .paragraph {
+            background-color: none;
+            @include shadow2;
+            margin-top: 0.5rem;
+          }
+        }
+    }
+  }
+}

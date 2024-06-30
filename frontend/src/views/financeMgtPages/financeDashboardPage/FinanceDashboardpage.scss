@@ -1,0 +1,17 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.finance-manager-page {
+  .finance-manager-page-container {
+    .finance-manager-page-title {
+      @include title;
+      @include shadow1;
+      background-color: $userSidebar-bg;
+      z-index: 999;
+    }
+
+    .finance-manager-wrapper {
+      @include flexRow;
+    }
+  }
+}

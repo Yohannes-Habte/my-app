@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.cfo-feedbacks-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .cfo-feedback-title {
+    @include subTitle;
+  }
+
+  .add-cfo-feedback-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-cfo-feedback-title {
+      @include subTitle;
+    }
+
+    .add-cfo-feedback-btn {
+      @include button2;
+    }
+  }
+
+  .cfo-feedbacks-container {
+  }
+}

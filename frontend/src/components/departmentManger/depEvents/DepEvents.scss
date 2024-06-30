@@ -1,0 +1,24 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-events-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-events-title {
+    @include subTitle;
+  }
+
+  .add-department-event-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-event-title {
+      @include subTitle;
+    }
+
+    .add-department-event-btn {
+      @include button2;
+    }
+  }
+}

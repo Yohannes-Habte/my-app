@@ -1,0 +1,24 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-products-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-products-title {
+    @include subTitle;
+  }
+
+  .add-department-product-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-product-title {
+      @include subTitle;
+    }
+
+    .add-department-product-btn {
+      @include button2;
+    }
+  }
+}

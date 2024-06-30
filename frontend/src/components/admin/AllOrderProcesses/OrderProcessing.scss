@@ -1,0 +1,72 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.order-steps-wrapper {
+  .order-steps-title {
+    @include subTitle;
+  }
+
+  .add-order-step-wrapper {
+    width: 50%;
+    margin: 1rem auto;
+    @include shadow2;
+
+    .add-order-step-title {
+      @include subTitle;
+    }
+
+    .error-message {
+      @include paragraph;
+      color: $red;
+    }
+
+    .add-order-step-form {
+      @include flexColumn;
+
+      .input-container {
+        @include inputContainer;
+
+        .input-icon {
+          @include inputIcon;
+        }
+
+        .input-field {
+          @include inputField;
+        }
+
+        .input-label {
+          @include inputLabel;
+        }
+
+        .input-highligh {
+          @include inputHighlight;
+        }
+
+        .input-field:focus + .input-label {
+          @include focusInputFieldAndInputLabel;
+        }
+      }
+
+      .input-consent {
+        @include flexRow;
+
+        .consent-checkbox {
+          @include checkbox;
+        }
+
+        .accept {
+          @include linkTo;
+          color: $black;
+        }
+
+        .terms-of-user {
+          @include termOfUse;
+        }
+      }
+
+      .add-order-step-btn {
+        @include button2;
+      }
+    }
+  }
+}

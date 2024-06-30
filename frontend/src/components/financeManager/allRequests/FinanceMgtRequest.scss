@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.cfo-requests-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .cfo-requests-title {
+    @include subTitle;
+  }
+
+  .add-cfo-request-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-cfo-request-title {
+      @include subTitle;
+    }
+
+    .add-cfo-request-btn {
+      @include button2;
+    }
+  }
+
+  .cfo-feedbacks-container {
+  }
+}

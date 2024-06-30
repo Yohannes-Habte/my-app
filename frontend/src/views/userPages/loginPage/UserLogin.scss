@@ -1,0 +1,112 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.user-lagin-page {
+  background-image: url(../../../assets/bg-13.png);
+  background-attachment: fixed;
+  background-size: cover;
+  padding: 1rem;
+
+  .user-lagin-page-container {
+    width: $laptop;
+    margin: 1rem auto;
+
+    .user-lagin-page-title {
+      @include title;
+    }
+
+    .user-login-fieldset {
+      @include fieldset;
+    }
+
+    .user-login-legend {
+      @include legend;
+      text-align: center;
+    }
+
+    .user-login-form {
+      @include twoGridTemplateEqualColumns;
+
+      // Image
+      .image-container {
+        .image {
+          width: 100%;
+          height: 50%;
+          object-fit: contain;
+        }
+      }
+
+      // login inputs
+      .inputs-wrapper {
+        margin-top: 3rem;
+        .input-container {
+          @include inputContainer;
+          margin-bottom: 1rem;
+
+          .input-icon {
+            @include inputIcon;
+          }
+
+          .input-field {
+            @include inputField;
+          }
+
+          .input-label {
+            @include inputLabel;
+          }
+
+          .input-highlight {
+            @include inputHighlight;
+          }
+
+          .input-field:focus + .input-label {
+            @include focusInputFieldAndInputLabel;
+          }
+
+          .input-field:focus + .input-label + .input-highlight {
+            width: 100%;
+          }
+
+          .icon {
+            @include passwordDisplay;
+          }
+        }
+      }
+
+      // checkbox and forgot password
+      .keep-me-signin-forgot-password-wrapper {
+        @include flexRow;
+        align-items: center;
+
+        .checkbox-and-keep-me-signin {
+          @include flexRow;
+
+          .checkbox-field {
+            @include checkbox;
+          }
+
+          .keep-me-login {
+            font-size: $afs;
+            margin-bottom: 1rem;
+          }
+        }
+
+        .forgot-link {
+          @include linkTo;
+        }
+      }
+
+      .user-login-btn {
+        @include button1;
+      }
+
+      .have-no-account {
+        @include haveAccount;
+
+        .link-to {
+          @include linkTo;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-courses-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-courses-title {
+    @include subTitle;
+  }
+
+  .add-department-course-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-course-title {
+      @include subTitle;
+    }
+
+    .add-department-course-btn {
+      @include button2;
+    }
+  }
+}

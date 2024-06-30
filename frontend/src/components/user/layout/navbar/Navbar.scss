@@ -1,0 +1,47 @@
+@import '../../../../styles/Variables.scss';
+@import '../../../../styles/Mixins.scss';
+
+.navbar-wrapper {
+  @include flexSpaceBetween;
+  background-color: $navbar-bg;
+  padding: 1rem 2rem;
+
+  // Categories
+  .categories-wrapper {
+    @include flexRow;
+    align-items: center;
+
+    .icon {
+      @include iconSize;
+    }
+  }
+
+  // Navbar Items
+  // navigation bar
+  .navbar-items {
+    @include flexRow;
+
+    .navbar-item {
+      .active-navbar-item {
+        @include activeNavbar;
+      }
+
+      .passive-navbar-item {
+        @include passiveNavbar;
+      }
+    }
+  }
+
+  // Languages
+  .languages-wrapper {
+    @include flexRow;
+
+    .language {
+      font-size: $afs;
+    }
+
+    .icon {
+      @include iconSize;
+    }
+  }
+}

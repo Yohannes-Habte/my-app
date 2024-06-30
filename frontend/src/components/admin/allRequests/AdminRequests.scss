@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.admin-requests-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .admin-requests-title {
+    @include subTitle;
+  }
+
+  .add-admin-request-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-admin-request-title {
+      @include subTitle;
+    }
+
+    .add-admin-request-btn {
+      @include button2;
+    }
+  }
+
+  .admin-requests-wrapper {
+  }
+}

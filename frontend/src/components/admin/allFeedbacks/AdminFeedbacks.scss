@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.admin-feedbacks-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .admin-feedback-title {
+    @include subTitle;
+  }
+
+  .add-admin-feedback-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-admin-feedback-title {
+      @include subTitle;
+    }
+
+    .add-admin-feedback-btn {
+      @include button2;
+    }
+  }
+
+  .admin-feedbacks-container {
+  }
+}

@@ -1,0 +1,40 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.employee-roles-wrapper {
+  width: 100%;
+  .employee-roles-title {
+    @include subTitle;
+  }
+
+  .add-employee-role-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-employee-role-title {
+      @include subTitle;
+    }
+
+    .add-employee-role-btn {
+      @include button2;
+    }
+  }
+
+  .employee-role-wrapper {
+    .employee-role-title {
+      @include subTitle;
+    }
+
+    .employee-role-description {
+      @include paragraph;
+    }
+
+    .employee-role-keywords {
+      @include paragraph;
+    }
+
+    .employee-role-department {
+      @include paragraph;
+    }
+  }
+}

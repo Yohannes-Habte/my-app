@@ -1,0 +1,7 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.cfo-dashboard-contents-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+}

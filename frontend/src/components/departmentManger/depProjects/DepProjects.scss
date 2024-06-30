@@ -1,0 +1,24 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-projects-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-projects-title {
+    @include subTitle;
+  }
+
+  .add-department-project-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+
+    .add-department-project-title {
+      @include subTitle;
+    }
+
+    .add-department-project-btn {
+      @include button2;
+    }
+  }
+}

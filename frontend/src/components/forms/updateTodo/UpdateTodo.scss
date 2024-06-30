@@ -1,0 +1,78 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.update-todo-page {
+  .update-todo-page-container {
+    width: 40%;
+    margin: 3rem auto;
+    @include flexColumn;
+    @include shadow2;
+    background-color: $box-bg;
+  
+
+    .todo-update-page-title {
+      @include title;
+    }
+
+    .update-todo-form {
+      @include flexColumnCenter;
+
+      .input-container {
+        @include inputContainer;
+        width: 650px;
+
+        .icon {
+          @include inputIcon;
+        }
+
+        .input-field {
+          @include inputField;
+        }
+
+        .input-label {
+          @include inputLabel;
+        }
+
+        .input-highlight {
+          @include inputHighlight;
+        }
+
+        .input-field:focus + .input-label {
+          @include focusInputFieldAndInputLabel;
+        }
+
+        .input-field:focus + .input-label + .input-highlight {
+          width: 100%;
+        }
+      }
+
+      .input-consent {
+        @include flexRow;
+        align-self: flex-start;
+        margin: 1rem 0 0 0;
+
+        .checkbox {
+          @include checkbox;
+        }
+
+        .accept {
+          @include termOfUse;
+          color: $black;
+        }
+
+        .terms-of-user {
+          @include termOfUse;
+        }
+      }
+
+      .add-new-todo-btn {
+        @include button1;
+        align-self: flex-start;
+
+        .loading {
+          @include loader;
+        }
+      }
+    }
+  }
+}

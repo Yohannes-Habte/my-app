@@ -1,0 +1,82 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.add-job-modal {
+  @include modal;
+
+  .add-job-popup-box {
+    @include popupBox;
+    @include shadow2;
+    width: $laptop;
+
+    .close {
+      @include closeModal;
+    }
+
+    .add-job-title {
+      @include title;
+    }
+
+    .add-job-form {
+      @include flexColumnCenter;
+
+      .inputs-wrapper {
+        @include twoGridTemplateEqualColumns;
+        width: $laptop;
+
+        .input-container {
+          @include inputContainer;
+
+          .input-icon {
+            @include inputIcon;
+          }
+
+          .input-field {
+            @include inputField;
+          }
+
+          .input-label {
+            @include inputLabel;
+          }
+
+          .input-highlight {
+            @include inputHighlight;
+          }
+
+          .input-field:focus + .input-label {
+            @include focusInputFieldAndInputLabel;
+          }
+
+          .input-field:focus + .input-label + .input-highlight {
+            width: 100%;
+          }
+        }
+      }
+
+      .input-consent {
+        @include flexRow;
+
+        .checkbox {
+          @include checkbox;
+        }
+
+        .accept {
+          @include termOfUse;
+          color: $black;
+        }
+
+        .terms-of-user {
+          @include termOfUse;
+        }
+      }
+
+      .add-new-job-btn {
+        @include button1;
+
+        .loading {
+          @include loader;
+        }
+      }
+    }
+  }
+}

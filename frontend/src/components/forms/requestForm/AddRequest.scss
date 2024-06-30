@@ -1,0 +1,78 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.add-request-modal {
+  @include modal;
+
+  .add-request-popup-box {
+    @include popupBox;
+    @include shadow2;
+    width: 700px;
+
+    .close {
+      @include closeModal;
+    }
+
+    .add-request-title {
+      @include title;
+    }
+
+    .add-request-form {
+      @include flexColumn;
+
+        .input-container {
+          @include inputContainer;
+
+          .input-icon {
+            @include inputIcon;
+          }
+
+          .input-field {
+            @include inputField;
+          }
+
+          .input-label {
+            @include inputLabel;
+          }
+
+          .input-highlight {
+            @include inputHighlight;
+          }
+
+          .input-field:focus + .input-label {
+            @include focusInputFieldAndInputLabel;
+          }
+
+          .input-field:focus + .input-label + .input-highlight {
+            width: 100%;
+          }
+        }
+     
+
+      .input-consent {
+        @include flexRow;
+
+        .checkbox {
+          @include checkbox;
+        }
+
+        .accept {
+          @include termOfUse;
+          color: $black;
+        }
+
+        .terms-of-user {
+          @include termOfUse;
+        }
+      }
+
+      .add-new-request-btn {
+        @include button1;
+
+        .loading {
+          @include loader;
+        }
+      }
+    }
+  }
+}

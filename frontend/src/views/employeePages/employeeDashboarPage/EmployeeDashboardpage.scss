@@ -1,0 +1,17 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.employee-profile-page {
+  .employee-profile-page-container {
+    .employee-profile-page-title {
+      @include title;
+      @include shadow1;
+      background-color: $userSidebar-bg;
+      z-index: 999;
+    }
+
+    .employee-profile-wrapper {
+      @include flexRow;
+    }
+  }
+}

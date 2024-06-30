@@ -1,0 +1,76 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.add-profession-modal {
+  @include modal;
+
+  .add-profession-popup-box {
+    @include popupBox;
+    width: 700px;
+    height: 680px;
+
+    .add-profession-title {
+      @include title;
+    }
+
+    .close {
+      @include closeModal;
+    }
+
+    .new-user-address-title {
+      @include subTitle;
+    }
+
+    .add-profession-form {
+      @include flexColumn;
+
+      .input-container {
+        @include inputContainer;
+        .icon {
+          @include inputIcon;
+        }
+
+        .input-field {
+          @include inputField;
+        }
+
+        .input-label {
+          @include inputLabel;
+        }
+
+        .input-highlight {
+          @include inputHighlight;
+        }
+
+        .input-field:focus + .input-label {
+          @include focusInputFieldAndInputLabel;
+        }
+
+        .input-field:focus + .input-label + .input-highlight {
+          width: 100%;
+        }
+      }
+
+      .input-consent {
+        @include flexRow;
+
+        .consent-checkbox {
+          @include checkbox;
+        }
+
+        .accept {
+          @include linkTo;
+          color: $black;
+        }
+
+        .terms-of-user {
+          @include termOfUse;
+        }
+      }
+
+      .add-new-profession-btn {
+        @include button2;
+      }
+    }
+  }
+}

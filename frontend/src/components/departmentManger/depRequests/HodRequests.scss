@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-requests-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .department-requests-title {
+    @include subTitle;
+  }
+
+  .add-department-request-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-department-request-title {
+      @include subTitle;
+    }
+
+    .add-department-request-btn {
+      @include button2;
+    }
+  }
+
+  .department-requests-wrapper {
+  }
+}

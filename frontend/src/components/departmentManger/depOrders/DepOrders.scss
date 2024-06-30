@@ -1,0 +1,11 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-orders-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+
+  .department-orders-title {
+    @include subTitle;
+  }
+}

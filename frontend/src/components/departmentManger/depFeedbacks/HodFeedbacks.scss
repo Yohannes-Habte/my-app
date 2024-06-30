@@ -1,0 +1,25 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.department-feedbacks-wrapper {
+  width: $mobile;
+  margin: 1rem auto;
+  .department-feedbacks-title {
+    @include subTitle;
+  }
+
+  .add-department-feedback-wrapper {
+    @include flexSpaceBetween;
+    margin-bottom: 1rem;
+    .add-department-feedback-title {
+      @include subTitle;
+    }
+
+    .add-department-feedback-btn {
+      @include button2;
+    }
+  }
+
+  .department-feedbacks-wrapper {
+  }
+}

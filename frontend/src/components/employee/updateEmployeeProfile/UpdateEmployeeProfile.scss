@@ -1,0 +1,107 @@
+@import '../../../styles/Variables.scss';
+@import '../../../styles/Mixins.scss';
+
+.employee-profile-wrapper {
+  width: 100%;
+  height: fit-content;
+
+  .update-employee-profile-wrapper {
+    width: $laptop;
+    margin: 1rem auto;
+    @include shadow2;
+
+    .update-employee-profile-title {
+      @include title;
+    }
+
+    // Error message
+    .error-message {
+      @include errorMessage;
+    }
+
+    .update-employee-image-container {
+      @include flexColumnCenter;
+      .update-emloyee-image {
+        @include userImage;
+      }
+
+      .logged-in-employee {
+        @include legend;
+        font-size: $sfs;
+      }
+    }
+
+    .update-employee-profile-fieldset {
+      @include fieldset;
+
+      .update-employee-profile-legend {
+        @include legend;
+      }
+
+      .update-employee-profile-form {
+        @include flexColumn;
+
+        .inputs-container {
+          @include twoGridTemplateEqualColumns;
+
+          .input-container {
+            @include inputContainer;
+
+            .input-icon {
+              @include inputIcon;
+            }
+
+            .input-field {
+              @include inputField;
+            }
+
+            .input-label {
+              @include inputLabel;
+            }
+
+            .input-highlight {
+              @include inputHighlight;
+            }
+
+            .input-field:focus + .input-label {
+              @include focusInputFieldAndInputLabel;
+            }
+
+            .input-field:focus + .input-label + .input-highlight {
+              width: 100%;
+            }
+
+            .password-display {
+              @include passwordDisplay;
+            }
+          }
+        }
+
+        .input-consent {
+          @include flexRow;
+
+          .consent-checkbox {
+            @include checkbox;
+          }
+
+          .accept {
+            @include termOfUse;
+            color: $black;
+          }
+
+          .terms-of-user {
+            @include termOfUse;
+          }
+        }
+
+        .update-employeee-acount-btn {
+          @include button1;
+
+          .loading {
+            @include loader;
+          }
+        }
+      }
+    }
+  }
+}
