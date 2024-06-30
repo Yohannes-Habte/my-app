@@ -83,6 +83,8 @@ const UserLogin = () => {
         dispatch(Action.postUserSuccess(data.user));
         toast.success(data.message);
 
+        localStorage.setItem("userInfo", JSON.stringify(data.user));
+
         reset();
         navigate("/");
       } catch (err) {

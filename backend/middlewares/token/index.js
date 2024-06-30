@@ -1,16 +1,9 @@
-import createError from "http-errors";
-import jwt from "jsonwebtoken";
+import JWT from "jsonwebtoken";
 
-//=====================================================================
-// Generate token
-//=====================================================================
 const generateToken = (userId) => {
-  const token = jwt.sign(
-    userId,
-
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
+  const token = JWT.sign({ userId }, process.env.JWT_SECRET, {
+    expiresIn: "3h",
+  });
   return token;
 };
 

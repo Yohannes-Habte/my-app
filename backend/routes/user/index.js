@@ -5,15 +5,18 @@ import {
   deleteOneUser,
   getAllUsers,
   getOneUser,
+  logoutUser,
 } from "../../controllers/user/index.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/:id", getOneUser);
 userRouter.get("/", getAllUsers);
-userRouter.get("/count/allUsers", countAllUsers);
-userRouter.delete("/:id", deleteOneUser);
 userRouter.delete("/", deleteAllUsers);
+userRouter.get("/logout", logoutUser);
+userRouter.get("/count/allUsers", countAllUsers);
+userRouter.get("/:id", getOneUser);
+userRouter.delete("/:id", deleteOneUser);
+
 
 // Export Router
 export default userRouter;

@@ -1,36 +1,53 @@
-import React, { useState } from 'react';
-import './UpdateUserProfile.scss';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import ReactIcons from '../../reactIcons/ReactIcons';
-import { NavLink } from 'react-router-dom';
-import Address from '../address/Address';
-import { useDispatch, useSelector } from 'react-redux';
-import PasswordChange from '../../forms/changePassword/PasswordChange';
-import UserOrders from '../userOrders/UserOrders';
-import UserRefunds from '../refunds/UserRefunds';
-import UserTrackOrder from '../trackOrder/UserTrackOrder';
-import UserInbox from '../userInbox/UserInbox';
+import { useState } from "react";
+import "./UpdateUserProfile.scss";
+import axios from "axios";
+import { toast } from "react-toastify";
+import ReactIcons from "../../reactIcons/ReactIcons";
+import { NavLink } from "react-router-dom";
+import Address from "../address/Address";
+import { useDispatch, useSelector } from "react-redux";
+import PasswordChange from "../../forms/changePassword/PasswordChange";
+import UserOrders from "../userOrders/UserOrders";
+import UserRefunds from "../refunds/UserRefunds";
+import UserTrackOrder from "../trackOrder/UserTrackOrder";
+import UserInbox from "../userInbox/UserInbox";
+import {
+  URL,
+  cloud_URL,
+  cloud_name,
+  upload_preset,
+} from "../../../utils/security/secreteKey";
+import {
+  updateUserFail,
+  updateUserStart,
+  updateUserSuccess,
+} from "../../../redux/reducers/userReducer";
 
 const UpdateUserProfile = ({ isActive }) => {
   // Global react icons
-  const { userIcon, uploadIcon, dateIcon, languageIcon, phoneIcon } =
-    ReactIcons();
+  const {
+    userIcon,
+    uploadIcon,
+    dateIcon,
+    profesionIcon,
+    languageIcon,
+    phoneIcon,
+  } = ReactIcons();
 
-  // Gloabl state variables
-  const { user } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // Local State variables
-
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [image, setImage] = useState('');
-  const [gender, setGender] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [profession, setProfession] = useState('');
-  const [language, setLanguage] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [userData, setUserData] = useState({
+    firstName: currentUser.firstName || "",
+    lastName: currentUser.lastName || "",
+    gender: currentUser.gender || "",
+    birthDate: currentUser.birthDate || "",
+    profession: currentUser.profession || "",
+    language: currentUser.language || "",
+    phoneNumber: currentUser.phoneNumber || "",
+  });
+  const [image, setImage] = useState("");
   const [agree, setAgree] = useState(false);
 
   // Update image
@@ -39,75 +56,70 @@ const UpdateUserProfile = ({ isActive }) => {
   };
 
   // Update Change
-  const updateChange = (event) => {
-    switch (event.target.name) {
-      case 'firstName':
-        setFirstName(event.target.value);
-        break;
-      case 'lastName':
-        setLastName(event.target.value);
-        break;
-      case 'gender':
-        setGender(event.target.value);
-        break;
-      case 'birthDate':
-        setBirthDate(event.target.value);
-        break;
-      case 'profession':
-        setProfession(event.target.value);
-        break;
-      case 'language':
-        setLanguage(event.target.value);
-        break;
-      case 'phoneNumber':
-        setPhoneNumber(event.target.value);
-        break;
-      case 'agree':
-        setAgree(!agree);
-        break;
-      default:
-        break;
-    }
+  const updateChange = (e) => {
+    const { name, value } = e.target;
+
+    setUserData({ ...userData, [name]: value });
   };
 
-  // Reste state variables into initial state
-  const reset = () => {
-    setFirstName('');
-    setLastName('');
-    setGender('');
-    setBirthDate('');
-    setProfession('');
-    setLanguage('');
-    setPhoneNumber('');
+  // Handle Rest state variables into initial state
+  const handleReset = () => {
+    setUserData({
+      firstName: "",
+      lastName: "",
+      gender: "",
+      birthDate: "",
+      profession: "",
+      language: "",
+      phoneNumber: "",
+    });
     setAgree(false);
   };
+
+  const {
+    firstName,
+    lastName,
+    gender,
+    birthDate,
+    profession,
+    language,
+    phoneNumber,
+  } = userData;
 
   // Handle submit to update user account
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      dispatch(updateUserStart());
       // Image validation
       const userPhoto = new FormData();
-      userPhoto.append('file', image);
-      userPhoto.append('cloud_name', '');
-      userPhoto.append('upload_preset', '');
+      userPhoto.append("file", image);
+      userPhoto.append("cloud_name", cloud_name);
+      userPhoto.append("upload_preset", upload_preset);
 
       // Save image to cloudinary
-      const response = await axios.post('', userPhoto);
+      const response = await axios.post(cloud_URL, userPhoto);
       const { url } = response.data;
 
       const updateUserInfo = {
-        firstName: firstName,
-        lastName: lastName,
+        userData,
         image: url,
+        agree: agree,
       };
 
-      const { data } = await axios.put(`/auth/update`, updateUserInfo);
+      const { data } = await axios.put(
+        `${URL}/auth/${currentUser._id}/profile/update`,
+        updateUserInfo
+      );
+      dispatch(updateUserSuccess(data.user));
 
       toast.success(data.message);
-      reset();
-    } catch (error) {}
+      handleReset();
+      localStorage.setItem("userInfo", JSON.stringify(data.user));
+    } catch (error) {
+      dispatch(updateUserFail(error.message));
+    }
   };
 
   return (
@@ -119,15 +131,18 @@ const UpdateUserProfile = ({ isActive }) => {
           <aside className="update_user-image-container">
             <img
               className="update-user-image"
-              src={'https://i.ibb.co/4pDNDk1/avatar.png'}
-              alt={'User'}
+              src={currentUser.image}
+              alt={currentUser.firstName}
             />
-            <h5 className="logged-in-user">User Name</h5>
+            <h5 className="logged-in-user">
+              {" "}
+              {currentUser.firstName} {currentUser.lastName}{" "}
+            </h5>
           </aside>
 
           <fieldset className="update-user-profile-fieldset">
             <legend className="update-user-profile-legend ">
-              {' '}
+              {" "}
               User Profile
             </legend>
             <form onSubmit={handleSubmit} className="update-user-profile-form">
@@ -137,8 +152,8 @@ const UpdateUserProfile = ({ isActive }) => {
                   <span className="icon"> {userIcon} </span>
                   <input
                     type="text"
-                    name={'firstName'}
-                    id={'firstName'}
+                    name={"firstName"}
+                    id={"firstName"}
                     autoComplete="name"
                     required
                     value={firstName}
@@ -147,7 +162,7 @@ const UpdateUserProfile = ({ isActive }) => {
                     className="input-field"
                   />
 
-                  <label htmlFor={'firstName'} className="input-label">
+                  <label htmlFor={"firstName"} className="input-label">
                     First Name
                   </label>
                   <span className="input-highlight"></span>
@@ -158,8 +173,8 @@ const UpdateUserProfile = ({ isActive }) => {
                   <span className="icon"> {userIcon} </span>
                   <input
                     type="text"
-                    name={'lastName'}
-                    id={'lastName'}
+                    name={"lastName"}
+                    id={"lastName"}
                     autoComplete="lastName"
                     required
                     value={lastName}
@@ -168,7 +183,7 @@ const UpdateUserProfile = ({ isActive }) => {
                     className="input-field"
                   />
 
-                  <label htmlFor={'lastName'} className="input-label">
+                  <label htmlFor={"lastName"} className="input-label">
                     Last Name
                   </label>
                   <span className="input-highlight"></span>
@@ -200,16 +215,16 @@ const UpdateUserProfile = ({ isActive }) => {
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
-                  </select>{' '}
+                  </select>{" "}
                 </div>
 
                 {/* Birth Date */}
                 <div className="input-container">
-                  <span className="icon"> {userIcon} </span>
+                  <span className="icon"> {dateIcon} </span>
                   <input
                     type="date"
-                    name={'birthDate'}
-                    id={'birthDate'}
+                    name={"birthDate"}
+                    id={"birthDate"}
                     autoComplete="birthDate"
                     value={birthDate}
                     onChange={updateChange}
@@ -217,7 +232,7 @@ const UpdateUserProfile = ({ isActive }) => {
                     className="input-field"
                   />
 
-                  <label htmlFor={'birthDate'} className="input-label">
+                  <label htmlFor={"birthDate"} className="input-label">
                     Birth Date
                   </label>
                   <span className="input-highlight"></span>
@@ -225,11 +240,11 @@ const UpdateUserProfile = ({ isActive }) => {
 
                 {/* Profession */}
                 <div className="input-container">
-                  <span className="icon"> {userIcon} </span>
+                  <span className="icon"> {profesionIcon} </span>
                   <input
                     type="text"
-                    name={'profession'}
-                    id={'profession'}
+                    name={"profession"}
+                    id={"profession"}
                     autoComplete="profession"
                     value={profession}
                     onChange={updateChange}
@@ -237,7 +252,7 @@ const UpdateUserProfile = ({ isActive }) => {
                     className="input-field"
                   />
 
-                  <label htmlFor={'profession'} className="input-label">
+                  <label htmlFor={"profession"} className="input-label">
                     Profession
                   </label>
                   <span className="input-highlight"></span>
@@ -245,7 +260,7 @@ const UpdateUserProfile = ({ isActive }) => {
 
                 {/* language */}
                 <div className="input-container">
-                  <span className="icon"> {userIcon} </span>
+                  <span className="icon"> {languageIcon} </span>
                   <select
                     name="language"
                     id="language"
@@ -262,11 +277,11 @@ const UpdateUserProfile = ({ isActive }) => {
 
                 {/* Phone Number */}
                 <div className="input-container">
-                  <span className="icon"> {userIcon} </span>
+                  <span className="icon"> {phoneIcon} </span>
                   <input
                     type="text"
-                    name={'phoneNumber'}
-                    id={'phoneNumber'}
+                    name={"phoneNumber"}
+                    id={"phoneNumber"}
                     autoComplete="phoneNumber"
                     value={phoneNumber}
                     onChange={updateChange}
@@ -274,7 +289,7 @@ const UpdateUserProfile = ({ isActive }) => {
                     className="input-field"
                   />
 
-                  <label htmlFor={'profession'} className="input-label">
+                  <label htmlFor={"profession"} className="input-label">
                     Phone Number
                   </label>
                   <span className="input-highlight"></span>
@@ -288,14 +303,14 @@ const UpdateUserProfile = ({ isActive }) => {
                   name="agree"
                   id="agree"
                   checked={agree}
-                  onChange={updateChange}
+                  onChange={() => setAgree(!agree)}
                   className="consent-checkbox"
                 />
                 <label htmlFor="agree" className="accept">
                   I accept
                 </label>
 
-                <NavLink className={'terms-of-user'}> Terms of Use</NavLink>
+                <NavLink className={"terms-of-user"}> Terms of Use</NavLink>
               </div>
 
               <button type="submit" className="update-user-profile-btn">

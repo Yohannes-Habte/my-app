@@ -9,7 +9,7 @@ const userSchema = new Schema(
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    image: { type: String, default: 'https://i.ibb.co/4pDNDk1/avatar.png' },
+    image: { type: String, default: "https://i.ibb.co/4pDNDk1/avatar.png" },
     gender: { type: String },
     birthDate: { type: String },
     profession: { type: String },

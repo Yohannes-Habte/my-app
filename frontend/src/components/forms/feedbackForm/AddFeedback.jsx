@@ -15,11 +15,11 @@ const initialState = {
   textMessage: '',
 };
 
-const AddFeedback = ({ setOpendFeedback }) => {
+const AddFeedback = ({ setOpenFeedback }) => {
   // Global react icons
   const { closeIcon, userIcon, messageIcon, uploadIcon } = ReactIcons();
 
-  // Gloabl state variables
+  // Global state variables
   const { feedbackPostLoading } = useSelector((state) => state.feedback);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const AddFeedback = ({ setOpendFeedback }) => {
   const [image, setIamge] = useState('');
   const [agree, setAgree] = useState(false);
 
-  // Descructuing
+  // Destructuring
   const { feedbackTo, subject, textMessage } = feedbackInfos;
 
   // Handle input change
@@ -74,7 +74,7 @@ const AddFeedback = ({ setOpendFeedback }) => {
   return (
     <article className="add-feedback-modal">
       <section className="add-feedback-popup-box">
-        <span onClick={() => setOpendFeedback(false)} className="close">
+        <span onClick={() => setOpenFeedback(false)} className="close">
           {closeIcon}
         </span>
         <h2 className="add-feedback-title"> Feedback to </h2>

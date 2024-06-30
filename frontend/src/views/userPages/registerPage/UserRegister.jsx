@@ -1,17 +1,17 @@
-import  { useState,   useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
-import { BsCheck2All } from 'react-icons/bs';
-import './UserRegister.scss';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet-async';
-import ReactIcons from '../../../components/reactIcons/ReactIcons';
-import { useDispatch, useSelector } from 'react-redux';
-import * as Action from '../../../redux/reducers/userReducer';
-import { validEmail, validPassword } from '../../../utils/validation/validate';
-import { URL } from '../../../utils/security/secreteKey';
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
+import { BsCheck2All } from "react-icons/bs";
+import "./UserRegister.scss";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
+import ReactIcons from "../../../components/reactIcons/ReactIcons";
+import { useDispatch, useSelector } from "react-redux";
+import * as Action from "../../../redux/reducers/userReducer";
+import { validEmail, validPassword } from "../../../utils/validation/validate";
+import { URL } from "../../../utils/security/secreteKey";
 
 const UserRegister = () => {
   // to navigate register page
@@ -31,10 +31,10 @@ const UserRegister = () => {
   } = ReactIcons();
 
   // Local state variables
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [agree, setAgree] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -95,19 +95,19 @@ const UserRegister = () => {
   // Function that is used to update the state variables of the registration form
   const updateChange = (event) => {
     switch (event.target.name) {
-      case 'firstName':
+      case "firstName":
         setFirstName(event.target.value);
         break;
-      case 'lastName':
+      case "lastName":
         setLastName(event.target.value);
         break;
-      case 'email':
+      case "email":
         setEmail(event.target.value);
         break;
-      case 'password':
+      case "password":
         setPassword(event.target.value);
         break;
-      case 'showPassword':
+      case "showPassword":
         setShowPassword(false);
         break;
       default:
@@ -117,10 +117,10 @@ const UserRegister = () => {
 
   // Function to reset all the state variables
   const reset = () => {
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPassword('');
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
     setAgree(false);
   };
 
@@ -130,9 +130,9 @@ const UserRegister = () => {
 
     // Check validation
     if (!validEmail(email)) {
-      toast.error('Invalid Email');
+      toast.error("Invalid Email");
     } else if (!validPassword(password)) {
-      toast.error('Password requirement is not fulfilled');
+      toast.error("Password requirement is not fulfilled");
     } else {
       try {
         dispatch(Action.postUserStart());
@@ -147,7 +147,8 @@ const UserRegister = () => {
         dispatch(Action.postUserSuccess(data.user));
         reset();
         toast.success(data.message);
-        navigate('/login');
+        localStorage.setItem("userInfo", JSON.stringify(data.user));
+        navigate("/login");
       } catch (err) {
         dispatch(Action.postUserFailure(err.response.data.message));
       }
@@ -223,7 +224,7 @@ const UserRegister = () => {
               <div className="input-container">
                 <span className="input-icon"> {passwordIcon} </span>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={password}
                   onChange={updateChange}
@@ -251,12 +252,12 @@ const UserRegister = () => {
                   className="user-signup-consent-input"
                 />
                 <span className="user-signup-accept">I accept</span>
-                <NavLink className={'terms-of-use'}> Terms of Use</NavLink>
+                <NavLink className={"terms-of-use"}> Terms of Use</NavLink>
               </div>
               <button className="user-signup-btn"> Register </button>
               <p className="have-account">
                 Already have an account?
-                <NavLink to="/login" className={'link-to-login'}>
+                <NavLink to="/login" className={"link-to-login"}>
                   Log In
                 </NavLink>
               </p>

@@ -1,5 +1,5 @@
-@import '../../../../styles/Variables.scss';
-@import '../../../../styles/Mixins.scss';
+@import "../../../../styles/Variables.scss";
+@import "../../../../styles/Mixins.scss";
 
 .header {
   .logo-register-login-wrapper {
@@ -10,12 +10,28 @@
       @include subTitle;
     }
 
-    .register-login-box{
+    .image-container {
+      @include flexRow;
+      align-items: center;
+
+      .user-login-image {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+
+    
+
+    .register-login-box {
       @include flexRow;
       gap: 1rem;
 
       .account-item {
-        .acount {}
+        .account {
+        }
       }
     }
   }
@@ -38,7 +54,6 @@
         height: 15rem;
         object-fit: contain;
       }
-
     }
   }
 }

@@ -3,7 +3,7 @@ import './AdminFeedbacks.scss';
 import AddFeedback from '../../forms/feedbackForm/AddFeedback';
 
 const AdminFeedbacks = () => {
-  const [openFeedback, setOpendFeedback] = useState(false);
+  const [openFeedback, setOpenFeedback] = useState(false);
   return (
     <article className="admin-feedbacks-wrapper">
       <h2 className="admin-feedbacks-title"> Addmin Feedbacks</h2>
@@ -11,7 +11,7 @@ const AdminFeedbacks = () => {
       <aside className="add-admin-feedback-wrapper">
         <h3 className="add-admin-feedback-title">Add New Feedback</h3>
         <button
-          onClick={() => setOpendFeedback(true)}
+          onClick={() => setOpenFeedback(true)}
           className="add-admin-feedback-btn"
         >
           Add Feedback
@@ -23,7 +23,7 @@ const AdminFeedbacks = () => {
         <h2 className="department-feedbacks-title"> CEO Messages </h2>
       </section>
 
-      {openFeedback && <AddFeedback setOpendFeedback={setOpendFeedback} />}
+      {openFeedback && <AddFeedback setOpenFeedback={setOpenFeedback} />}
     </article>
   );
 };

@@ -8,79 +8,197 @@ import User from "../models/userModel.js";
 
 export const userAuth = async (req, res, next) => {
   try {
-    //const token = req.cookies.token;
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     if (!token) {
-      res.status(401);
-      throw new Error("User unauthorized! Please login!");
+      return next(createError(401, "User is not authenticated!"));
     }
 
-    const VerifiedToken = jwt.verify(token, process.env.JWT_SECRET);
-    // Get user id from the token
-    const user = await User.findById(VerifiedToken.id);
+    let decodedToken;
 
-    if (user) {
-      // If the user found, save the user in the req.user, which is equal to the user in the database
-      req.user = user;
-      next();
-    } else {
-      res.status(401);
-      throw new Error("User is not authorized!");
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return next(createError(401, "Token has expired. Please login again."));
+      } else if (err.name === "JsonWebTokenError") {
+        return next(createError(401, "Invalid token. Please login again."));
+      } else {
+        return next(createError(500, "Failed to authenticate token."));
+      }
     }
-  } catch (err) {
-    console.log(err);
+
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+      return next(createError(403, "User is not authorized."));
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    return next(createError(500, "Internal Server Error."));
   }
 };
 
 //===========================================================
-// User Authentication and Authorization
+// HOD Auth
 //===========================================================
-export const userAuthNotForNow = async (req, res, next) => {
+
+export const employeeAuth = async (req, res, next) => {
   try {
-    // const token = req.cookies.access_token;
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     if (!token) {
-      return next(createError(401, "User is not authonticated! Please login!"));
+      return next(createError(401, "User is not authenticated!"));
     }
 
-    // If token exist, decode it
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    // Find user from the database
+    let decodedToken;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return next(createError(401, "Token has expired. Please login again."));
+      } else if (err.name === "JsonWebTokenError") {
+        return next(createError(401, "Invalid token. Please login again."));
+      } else {
+        return next(createError(500, "Failed to authenticate token."));
+      }
+    }
+
     const user = await User.findById(decodedToken.id);
-    if (user.id === req.params.id || user.isAdmin) {
-      next();
+    if (!user) {
+      return next(createError(403, "User is not authorized."));
+    }
+
+    if (user && user.role.Employee) {
+      return next();
     } else {
-      return next(createError(403, "User is not authorized!"));
+      return next(createError(403, "User is not authorized."));
     }
   } catch (error) {
-    console.log(error);
-    next(createError(403, "User could not be authorized. Please try again"));
+    console.error("Authentication error:", error);
+    return next(createError(500, "An error occurred during authentication."));
   }
 };
 
 //===========================================================
-// Admin Authentication and Authorization
+// CEO Auth
 //===========================================================
 
-export const adminAuth = async (req, res, next) => {
+export const ceoAuth = async (req, res, next) => {
   try {
-    //const token = req.cookies.access_token;
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.cookies.access_token;
     if (!token) {
-      return next(createError(401, "User is not authonticated! Please login!"));
+      return next(createError(401, "User is not authenticated!"));
     }
 
-    // If token exist, decode it
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    // Find user from the database
+    let decodedToken;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return next(createError(401, "Token has expired. Please login again."));
+      } else if (err.name === "JsonWebTokenError") {
+        return next(createError(401, "Invalid token. Please login again."));
+      } else {
+        return next(createError(500, "Failed to authenticate token."));
+      }
+    }
+
     const user = await User.findById(decodedToken.id);
-    if (user && user.isAdmin) {
-      next();
+    if (!user) {
+      return next(createError(403, "User is not authorized."));
+    }
+
+    if (user && user.role.CEO) {
+      return next();
     } else {
-      return next(createError(403, "User unauthorized!"));
+      return next(createError(403, "User is not authorized."));
     }
   } catch (error) {
-    console.log(error);
-    next(createError(403, "Admin is the only one who is authorized!"));
+    console.error("Authentication error:", error);
+    return next(createError(500, "An error occurred during authentication."));
+  }
+};
+
+//===========================================================
+// CFO Auth
+//===========================================================
+
+export const cfoAuth = async (req, res, next) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return next(createError(401, "User is not authenticated!"));
+    }
+
+    let decodedToken;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return next(createError(401, "Token has expired. Please login again."));
+      } else if (err.name === "JsonWebTokenError") {
+        return next(createError(401, "Invalid token. Please login again."));
+      } else {
+        return next(createError(500, "Failed to authenticate token."));
+      }
+    }
+
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+      return next(createError(403, "User is not authorized."));
+    }
+
+    if (user && user.role.CFO) {
+      return next();
+    } else {
+      return next(createError(403, "User is not authorized."));
+    }
+  } catch (error) {
+    console.error("Authentication error:", error);
+    return next(createError(500, "An error occurred during authentication."));
+  }
+};
+
+//===========================================================
+// HOD Auth
+//===========================================================
+
+export const hodAuth = async (req, res, next) => {
+  try {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return next(createError(401, "User is not authenticated!"));
+    }
+
+    let decodedToken;
+
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return next(createError(401, "Token has expired. Please login again."));
+      } else if (err.name === "JsonWebTokenError") {
+        return next(createError(401, "Invalid token. Please login again."));
+      } else {
+        return next(createError(500, "Failed to authenticate token."));
+      }
+    }
+
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+      return next(createError(403, "User is not authorized."));
+    }
+
+    if (user && user.role.HOD) {
+      return next();
+    } else {
+      return next(createError(403, "User is not authorized."));
+    }
+  } catch (error) {
+    console.error("Authentication error:", error);
+    return next(createError(500, "An error occurred during authentication."));
   }
 };

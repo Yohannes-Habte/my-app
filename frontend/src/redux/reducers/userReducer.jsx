@@ -1,17 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentUser: null,
+  currentUser: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null,
   users: [],
-  error: '',
+  error: "",
   u_postLoading: false,
   u_getLoading: false,
   u_editLoading: false,
   u_deleteLoading: false,
+  logoutLoading: false,
 };
 
 const userReducer = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     // Post course
@@ -27,20 +30,33 @@ const userReducer = createSlice({
       state.error = action.payload;
     },
 
-    // Edit course
-    editUserStart: (state) => {},
-    editUserSuccess: (state, action) => {},
-    editUserFailure: (state, action) => {},
+    // Logout user
+    logoutUserStart: (state) => {
+      state.logoutLoading = true;
+    },
+    logoutUserSuccess: (state, action) => {
+      state.currentUser = action.payload;
+      state.logoutLoading = false;
+      state.error = null;
+    },
+    logoutUserFail: (state, action) => {
+      state.error = action.payload;
+      state.logoutLoading = false;
+    },
 
-    // Get course
-    getUserStart: (state) => {},
-    getUserSuccess: (state, action) => {},
-    getUserFailure: (state, action) => {},
-
-    // Delete course
-    deleteUserStart: (state) => {},
-    deleteUserSuccess: (state, action) => {},
-    deleteUserFailure: (state, action) => {},
+    // Update user
+    updateUserStart: (state) => {
+      state.u_editLoading = true;
+    },
+    updateUserSuccess: (state, action) => {
+      state.currentUser = action.payload;
+      state.u_editLoading = false;
+      state.error = null;
+    },
+    updateUserFail: (state, action) => {
+      state.error = action.payload;
+      state.u_editLoading = false;
+    },
 
     clearErrors: (state) => {
       state.error = null;
@@ -53,17 +69,14 @@ export const {
   postUserSuccess,
   postUserFailure,
 
-  editUserStart,
-  editUserSuccess,
-  editUserFailure,
+  logoutUserStart,
+  logoutUserSuccess,
+  logoutUserFail,
 
-  getUserStart,
-  getUserSuccess,
-  getUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFail,
 
-  deleteUserStart,
-  deleteUserSuccess,
-  deleteUserFailure,
   clearErrors,
 } = userReducer.actions;
 
