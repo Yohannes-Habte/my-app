@@ -1,48 +1,77 @@
-import { useState } from 'react';
-import './AddFeedback.scss';
-import { Link } from 'react-router-dom';
-import ReactIcons from '../../reactIcons/ReactIcons';
-import { useDispatch, useSelector } from 'react-redux';
-import * as ActionFeedback from '../../../redux/reducers/feedbackReducer';
+import { useState } from "react";
+import "./AddFeedback.scss";
+import ReactIcons from "../../reactIcons/ReactIcons";
+import { useDispatch, useSelector } from "react-redux";
+import * as ActionFeedback from "../../../redux/reducers/feedbackReducer";
 
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { URL } from '../../../utils/security/secreteKey';
+import axios from "axios";
+import { toast } from "react-toastify";
+import { URL } from "../../../utils/security/secreteKey";
 
 const initialState = {
-  feedbackTo: '',
-  subject: '',
-  textMessage: '',
+  feedbackTo: "",
+  subject: "",
+  textMessage: "",
 };
 
 const AddFeedback = ({ setOpenFeedback }) => {
   // Global react icons
-  const { closeIcon, userIcon, messageIcon, uploadIcon } = ReactIcons();
+  const { closeIcon, messageIcon, uploadIcon, subjectIcon, emailIcon } =
+    ReactIcons();
 
   // Global state variables
   const { feedbackPostLoading } = useSelector((state) => state.feedback);
   const dispatch = useDispatch();
 
   // Local state variables
-  const [feedbackInfos, setFeedbackInfos] = useState(initialState);
-  const [image, setIamge] = useState('');
-  const [agree, setAgree] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const [image, setImage] = useState("");
 
   // Destructuring
-  const { feedbackTo, subject, textMessage } = feedbackInfos;
+  const { feedbackTo, subject, textMessage } = formData;
+
+  // Handle image change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+      ];
+      const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+      if (!validImageTypes.includes(file.type)) {
+        alert("Invalid file type: " + file.type);
+        return;
+      }
+
+      if (file.size > maxSizeInBytes) {
+        alert("File too large: " + file.name);
+        return;
+      }
+
+      setImage(file);
+    }
+  };
 
   // Handle input change
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFeedbackInfos({ ...feedbackInfos, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   // Reset the variables to their initial value or state
   const reset = () => {
-    setFeedbackInfos({
-      feedbackTo: '',
-      subject: '',
-      textMessage: '',
+    setFormData({
+      feedbackTo: "",
+      subject: "",
+      textMessage: "",
     });
   };
 
@@ -52,15 +81,20 @@ const AddFeedback = ({ setOpenFeedback }) => {
 
     try {
       dispatch(ActionFeedback.postFeedbackStart());
-      const newRole = {
+      const feedback = {
         feedbackTo: feedbackTo,
         subject: subject,
         textMessage: textMessage,
-        agree: agree,
+        image: image,
       };
       const { data } = await axios.post(
         `${URL}/feedbacks/new-feedback`,
-        newRole
+        feedback,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       dispatch(ActionFeedback.postFeedbackSuccess(data.send));
@@ -82,11 +116,11 @@ const AddFeedback = ({ setOpenFeedback }) => {
         <form action="" onSubmit={handleSubmit} className="add-feedback-form">
           {/*Feedback To */}
           <div className="input-container">
-            <span className="icon"> {messageIcon} </span>
+            <span className="icon"> {emailIcon} </span>
             <input
               type="text"
-              name={'feedbackTo'}
-              id={'feedbackTo'}
+              name={"feedbackTo"}
+              id={"feedbackTo"}
               autoComplete="feedbackTo"
               value={feedbackTo}
               onChange={handleChange}
@@ -94,7 +128,7 @@ const AddFeedback = ({ setOpenFeedback }) => {
               className="input-field"
             />
 
-            <label htmlFor={'feedbackTo'} className="input-label">
+            <label htmlFor={"feedbackTo"} className="input-label">
               Feedback to
             </label>
             <span className="input-highlight"></span>
@@ -102,11 +136,11 @@ const AddFeedback = ({ setOpenFeedback }) => {
 
           {/* subject */}
           <div className="input-container">
-            <span className="icon"> {messageIcon} </span>
+            <span className="icon"> {subjectIcon} </span>
             <input
               type="text"
-              name={'subject'}
-              id={'subject'}
+              name={"subject"}
+              id={"subject"}
               autoComplete="subject"
               value={subject}
               onChange={handleChange}
@@ -114,7 +148,7 @@ const AddFeedback = ({ setOpenFeedback }) => {
               className="input-field"
             />
 
-            <label htmlFor={'subject'} className="input-label">
+            <label htmlFor={"subject"} className="input-label">
               Subject
             </label>
             <span className="input-highlight"></span>
@@ -134,7 +168,7 @@ const AddFeedback = ({ setOpenFeedback }) => {
               className="input-field"
             ></textarea>
 
-            <label htmlFor={'discountPrice'} className="input-label">
+            <label htmlFor={"discountPrice"} className="input-label">
               Text Message
             </label>
             <span className="input-highlight"></span>
@@ -145,38 +179,22 @@ const AddFeedback = ({ setOpenFeedback }) => {
             <span className="icon"> {uploadIcon} </span>
             <input
               type="file"
-              name={'image'}
-              id={'tag'}
-              autoComplete="image"
-              value={image}
+              name={"image"}
+              id={"image"}
+              accept="image/*"
+              onChange={handleImageChange}
               className="input-field"
             />
 
-            <label htmlFor={'image'} className="input-label">
+            <label htmlFor={"image"} className="input-label">
               Attach Image or File
             </label>
             <span className="input-highlight"></span>
           </div>
 
-          {/* Consent */}
-          <div className="input-consent">
-            <input
-              type="checkbox"
-              name="agree"
-              id="agree"
-              checked={agree}
-              className="checkbox"
-            />
-            <label htmlFor="agree" className="accept">
-              I accept
-            </label>
-
-            <Link className={'terms-of-user'}> Terms of Use</Link>
-          </div>
-
           <button className="add-new-feedback-btn">Submit</button>
         </form>
-      </section>{' '}
+      </section>{" "}
     </article>
   );
 };

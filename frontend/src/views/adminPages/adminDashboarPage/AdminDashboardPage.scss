@@ -1,5 +1,5 @@
-@import '../../../styles/Variables.scss';
-@import '../../../styles/Mixins.scss';
+@import "../../../styles/Variables.scss";
+@import "../../../styles/Mixins.scss";
 
 .admin-profile-page {
   .admin-profile-page-container {
@@ -11,7 +11,9 @@
     }
 
     .admin-profile-wrapper {
-      @include flexRow;
+      display: grid;
+      grid-template-columns: 15% 84%;
+      column-gap: 1rem;
     }
   }
 }

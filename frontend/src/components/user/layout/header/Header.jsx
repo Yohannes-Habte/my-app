@@ -46,7 +46,7 @@ const Header = () => {
         const { data } = await axios.get(`${URL}/pages/footer`);
         setData(data);
       } catch (error) {
-        console.log(error);
+        toast.error(error.message);
       }
     };
     getData();
@@ -64,7 +64,11 @@ const Header = () => {
             <img
               className="user-login-image"
               onClick={handleLogout}
-              src={"https://i.ibb.co/4pDNDk1/avatar.png"}
+              src={
+                currentUser.image
+                  ? currentUser.image
+                  : "https://i.ibb.co/4pDNDk1/avatar.png"
+              }
               alt={currentUser.firstName}
             />
             {currentUser.firstName}

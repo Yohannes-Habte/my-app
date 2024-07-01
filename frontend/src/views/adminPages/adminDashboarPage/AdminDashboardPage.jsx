@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './AdminDashboardPage.scss';
 import AdminSidebar from '../../../components/admin/layout/adminSidebar/AdminSidebar';
 import AdminContents from '../../../components/admin/adminDashboardContents/AdminContents';

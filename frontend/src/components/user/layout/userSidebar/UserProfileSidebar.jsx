@@ -1,15 +1,5 @@
-import React from 'react';
 import './UserProfileSidebar.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
-import { FaAddressCard } from 'react-icons/fa';
-import { RiLockPasswordFill } from 'react-icons/ri';
-import { MdMedicalServices } from 'react-icons/md';
-import { RiAdminFill } from 'react-icons/ri';
-import { RiMoneyEuroBoxFill } from 'react-icons/ri';
-import { IoMdLogOut } from 'react-icons/io';
-import { MdOutlineMessage } from 'react-icons/md';
-import { GiSunPriest } from 'react-icons/gi';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';

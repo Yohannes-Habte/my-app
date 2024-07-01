@@ -3,6 +3,7 @@
 
 .action-wrapper {
     @include flexRow;
+    width: 100%;
 
     .update-icon {
         @include editIcon;

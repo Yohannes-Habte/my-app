@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { FaUser } from 'react-icons/fa';
 import { MdPhoneInTalk } from 'react-icons/md';
 import { MdEmail } from 'react-icons/md';
@@ -58,6 +58,7 @@ import { GrStatusGood } from 'react-icons/gr';
 import { CgWebsite } from 'react-icons/cg';
 import { FaMoneyCheckAlt } from 'react-icons/fa';
 import { FaRegEdit } from 'react-icons/fa';
+import { MdSubject } from "react-icons/md";
 
 const ReactIcons = () => {
   // user icons
@@ -70,6 +71,7 @@ const ReactIcons = () => {
 
   // Email icon
   const emailIcon = <MdEmail />;
+  const subjectIcon = <MdSubject />;
 
   // Phone icons
   const phoneIcon = <MdPhoneInTalk />;
@@ -254,6 +256,7 @@ const ReactIcons = () => {
     websiteIcon,
     priceIcon,
     editIcon,
+    subjectIcon
   };
 };
 

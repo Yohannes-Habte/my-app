@@ -3,15 +3,15 @@ import "./AdminRequests.scss"
 import AddRequest from '../../forms/requestForm/AddRequest';
 
 const AdminRequests = () => {
-  const [openRequest, setOpendRequest] = useState(false);
+  const [openRequest, setOpenRequest] = useState(false);
   return (
     <article className="admin-requests-wrapper">
-      <h2 className="admin-requests-title"> Reuests</h2>
+      <h2 className="admin-requests-title"> Requests</h2>
 
       <aside className="add-admin-request-wrapper">
         <h3 className="add-admin-request-title">Add New Request</h3>
         <button
-          onClick={() => setOpendRequest(true)}
+          onClick={() => setOpenRequest(true)}
           className="add-admin-request-btn"
         >
           Add Request
@@ -23,7 +23,7 @@ const AdminRequests = () => {
         <h2 className="feedback"> Request Messages </h2>
       </section>
 
-      {openRequest && <AddRequest setOpendRequest={setOpendRequest} />}
+      {openRequest && <AddRequest setOpenRequest={setOpenRequest} />}
     </article>
   );
 };

@@ -1,64 +1,77 @@
-import { useState } from 'react';
-import './AddRequest.scss';
-import { Link } from 'react-router-dom';
-import ReactIcons from '../../reactIcons/ReactIcons';
-import { useDispatch, useSelector } from 'react-redux';
-import * as ActionRequest from '../../../redux/reducers/requestReducer';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { URL } from '../../../utils/security/secreteKey';
+import { useState } from "react";
+import "./AddRequest.scss";
+import ReactIcons from "../../reactIcons/ReactIcons";
+import { useDispatch, useSelector } from "react-redux";
+import * as ActionRequest from "../../../redux/reducers/requestReducer";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { URL } from "../../../utils/security/secreteKey";
 
 const initialState = {
-  requestTo: '',
-  subject: '',
-  textMessage: '',
+  requestTo: "",
+  subject: "",
+  textMessage: "",
+  image: null,
 };
-const AddRequest = ({ setOpendRequest }) => {
+const AddRequest = ({ setOpenRequest }) => {
   // Global react icons
-  const { closeIcon, messageIcon, uploadIcon } = ReactIcons();
+  const { closeIcon, messageIcon, uploadIcon, subjectIcon, emailIcon } =
+    ReactIcons();
 
   // Gloabl state variables
   const { depPostLoading } = useSelector((state) => state.request);
   const dispatch = useDispatch();
 
   // Local state variables
-  const [requestInfos, setRequestInfos] = useState(initialState);
-  const [image, setIamge] = useState('');
-  const [agree, setAgree] = useState(false);
+  const [formData, setFormData] = useState(initialState);
 
-  // Descructuing
-  const { requestTo, subject, textMessage } = requestInfos;
+  // Destructuring
+  const { requestTo, subject, textMessage, image } = formData;
 
-  // Handle input change
+  // Handle change
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRequestInfos({ ...requestInfos, [name]: value });
+    const { name, value, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   // Reset the variables to their initial value or state
   const reset = () => {
-    setRequestInfos({
-      requestTo: '',
-      subject: '',
-      textMessage: '',
+    setFormData({
+      requestTo: "",
+      subject: "",
+      textMessage: "",
+      image: null,
     });
   };
 
   // Handle Submit
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Form data to be sent
+    const requestData = new FormData();
+    requestData.append("requestTo", requestTo);
+    requestData.append("subject", subject);
+    requestData.append("textMessage", textMessage);
+    requestData.append("image", image);
 
     try {
       dispatch(ActionRequest.postRequestStart());
-      const newRole = {
-        requestTo: requestTo,
-        subject: subject,
-        textMessage: textMessage,
-        agree: agree,
-      };
-      const { data } = await axios.post(`${URL}/requests/new-request`, newRole);
 
-      dispatch(ActionRequest.postRequestSuccess(data.send));
+      const { data } = await axios.post(
+        `${URL}/requests/new-request`,
+        requestData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      dispatch(ActionRequest.postRequestSuccess(data.request));
       reset();
       toast.success(data.message);
     } catch (err) {
@@ -69,19 +82,24 @@ const AddRequest = ({ setOpendRequest }) => {
   return (
     <article className="add-request-modal">
       <section className="add-request-popup-box">
-        <span onClick={() => setOpendRequest(false)} className="close">
+        <span onClick={() => setOpenRequest(false)} className="close">
           {closeIcon}
         </span>
         <h2 className="add-request-title"> Request to </h2>
 
-        <form action="" onSubmit={handleSubmit} className="add-request-form">
+        <form
+          action=""
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+          className="add-request-form"
+        >
           {/* Request to */}
           <div className="input-container">
-            <span className="input-icon"> {messageIcon} </span>
+            <span className="input-icon"> {emailIcon} </span>
             <input
               type="text"
-              name={'requestTo'}
-              id={'requestTo'}
+              name={"requestTo"}
+              id={"requestTo"}
               autoComplete="requestTo"
               value={requestTo}
               onChange={handleChange}
@@ -89,7 +107,7 @@ const AddRequest = ({ setOpendRequest }) => {
               className="input-field"
             />
 
-            <label htmlFor={'courseName'} className="input-label">
+            <label htmlFor={"courseName"} className="input-label">
               Request to
             </label>
             <span className="input-highlight"></span>
@@ -97,11 +115,11 @@ const AddRequest = ({ setOpendRequest }) => {
 
           {/* subject */}
           <div className="input-container">
-            <span className="input-icon"> {messageIcon} </span>
+            <span className="input-icon"> {subjectIcon} </span>
             <input
               type="text"
-              name={'subject'}
-              id={'subject'}
+              name={"subject"}
+              id={"subject"}
               autoComplete="subject"
               value={subject}
               onChange={handleChange}
@@ -109,7 +127,7 @@ const AddRequest = ({ setOpendRequest }) => {
               className="input-field"
             />
 
-            <label htmlFor={'subject'} className="input-label">
+            <label htmlFor={"subject"} className="input-label">
               Subject
             </label>
             <span className="input-highlight"></span>
@@ -129,7 +147,7 @@ const AddRequest = ({ setOpendRequest }) => {
               className="input-field"
             ></textarea>
 
-            <label htmlFor={'discountPrice'} className="input-label">
+            <label htmlFor={"discountPrice"} className="input-label">
               Email Message
             </label>
             <span className="input-highlight"></span>
@@ -140,33 +158,17 @@ const AddRequest = ({ setOpendRequest }) => {
             <span className="input-icon"> {uploadIcon} </span>
             <input
               type="file"
-              name={'image'}
-              id={'tag'}
-              autoComplete="image"
-              value={image}
+              name={"image"}
+              id={"image"}
+              accept="image/*"
+              onChange={handleChange}
               className="input-field"
             />
 
-            <label htmlFor={'image'} className="input-label">
+            <label htmlFor={"image"} className="input-label">
               Attach Image or File
             </label>
             <span className="input-highlight"></span>
-          </div>
-
-          {/* Consent */}
-          <div className="input-consent">
-            <input
-              type="checkbox"
-              name="agree"
-              id="agree"
-              checked={agree}
-              className="checkbox"
-            />
-            <label htmlFor="agree" className="accept">
-              I accept
-            </label>
-
-            <Link className={'terms-of-user'}> Terms of Use</Link>
           </div>
 
           <button className="add-new-request-btn">Submit</button>
