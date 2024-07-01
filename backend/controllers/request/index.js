@@ -1,28 +1,49 @@
-import createError from 'http-errors';
-import Request from '../../models/request/index.js';
+import createError from "http-errors";
+import Request from "../../models/request/index.js";
+import { validationResult } from "express-validator";
 
 //===========================================================
 // Create Request
 //===========================================================
 export const createRequest = async (req, res, next) => {
+  let { requestTo, subject, textMessage, image } = req.body;
+
+  const errors = validationResult(req); // Get validation errors, if any
+
+  // Check if there are validation errors
+  if (!errors.isEmpty()) {
+    // If there are errors, send a 400 status response with the errors
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
-    const sendEmail = new Request(req.body);
+    console.log("Uploaded image:", req.file.filename);
+
+    // Create a new Request object
+    const sendEmail = new Request({
+      requestTo: requestTo,
+      subject: subject,
+      textMessage: textMessage,
+      image: `http://localhost:9000/images/${req.file.filename}`,
+    });
 
     // Save Request in the database
     try {
       await sendEmail.save();
     } catch (error) {
-      return next(createError(500, 'Request could not be saved'));
+      console.log(error);
+      return next(createError(500, "Request could not be saved"));
     }
 
     // Response will be
     res.status(201).json({
       success: true,
-      send: sendEmail,
-      message: 'Request is successfully sent!',
+      request: sendEmail,
+      message: "Request is successfully sent!",
     });
   } catch (error) {
-    return next(createError(500, 'Request could not be sent'));
+    console.log(error);
+    return next(createError(500, "Server Error"));
   }
 };
 
