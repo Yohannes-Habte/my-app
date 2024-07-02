@@ -24,7 +24,7 @@ export const createRequest = async (req, res, next) => {
       requestTo: requestTo,
       subject: subject,
       textMessage: textMessage,
-      image: `http://localhost:9000/images/${req.file.filename}`,
+      image: `http://localhost:9000/request/${req.file.filename}`,
     });
 
     // Save Request in the database

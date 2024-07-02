@@ -76,7 +76,7 @@ app.use("/api/v1/todos", todoRouter);
 app.use("/api/v1/users", userRouter);
 
 // Static assets
-app.use(express.static("assets"));
+app.use(express.static("uploads"));
 
 // Global error handler
 app.use(globalErrorHandler);
